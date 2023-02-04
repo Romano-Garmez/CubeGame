@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {
     public int speed = 300;
-    public int detectionDistance = 5;
     private Rigidbody playerRB;
+    private Vector3 rayDirection;
     private bool isMoving = false;
     public LayerMask layerMask;
     private RaycastHit hit;
@@ -19,6 +19,7 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.DrawRay(transform.position, rayDirection, Color.green);
         if (isMoving)
         {
             return;
@@ -49,7 +50,7 @@ public class PlayerScript : MonoBehaviour
         float remainingAngle = 90;
         Vector3 rotationCenter = transform.position + direction / 2 + Vector3.down / 2;
         Vector3 rotationAxis = Vector3.Cross(Vector3.up, direction);
-
+        rayDirection = transform.position + direction;
         while (remainingAngle > 0)
         {
             float rotationAngle = Mathf.Min(Time.deltaTime * speed, remainingAngle);
