@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8112491524376924851}
   m_Layer: 0
   m_Name: TerrainCube
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -9,7 +9,6 @@ public class PlayerScript : MonoBehaviour
     private Vector3 rayDirection;
     private bool isMoving = false;
     public LayerMask layerMask;
-    private RaycastHit hit;
 
     void Start()
     {
@@ -26,31 +25,53 @@ public class PlayerScript : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            StartCoroutine(Roll(Vector3.right));
+            checkRoll(Vector3.right);
         }
         else if (Input.GetKey(KeyCode.LeftArrow))
         {
-            StartCoroutine(Roll(Vector3.left));
+            checkRoll(Vector3.left);
         }
         else if (Input.GetKey(KeyCode.UpArrow))
         {
-            StartCoroutine(Roll(Vector3.forward));
+            checkRoll(Vector3.forward);
         }
         else if (Input.GetKey(KeyCode.DownArrow))
         {
-            StartCoroutine(Roll(Vector3.back));
+            checkRoll(Vector3.back);
+        }
+    }
+
+    void checkRoll(Vector3 direction)
+    {
+        RaycastHit hit;
+        rayDirection = direction;
+
+        if (Physics.Raycast(transform.position, direction, out hit, 1, layerMask))
+        {
+            if (hit.collider.gameObject.tag == "Tile")
+            {
+                Debug.Log("Unable to move");
+            }
+            else
+            {
+                StartCoroutine(Roll(direction));
+            }
+        }
+        else
+        {
+            StartCoroutine(Roll(direction));
         }
     }
 
     IEnumerator Roll(Vector3 direction)
     {
+        Debug.Log("Able to move");
         isMoving = true;
-
         playerRB.isKinematic = true;
         float remainingAngle = 90;
         Vector3 rotationCenter = transform.position + direction / 2 + Vector3.down / 2;
         Vector3 rotationAxis = Vector3.Cross(Vector3.up, direction);
-        rayDirection = transform.position + direction;
+
         while (remainingAngle > 0)
         {
             float rotationAngle = Mathf.Min(Time.deltaTime * speed, remainingAngle);
@@ -60,10 +81,5 @@ public class PlayerScript : MonoBehaviour
         }
         playerRB.isKinematic = false;
         isMoving = false;
-        // transform.position = new Vector3(
-        //     Mathf.Round(transform.position.x),
-        //     Mathf.Round(transform.position.y),
-        //     Mathf.Round(transform.position.z)
-        // );
     }
 }
