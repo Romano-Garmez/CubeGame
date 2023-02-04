@@ -56,7 +56,7 @@ public class PlayerScript : MonoBehaviour
             //stop motion if wall in the way
             if (hit.collider.gameObject.tag == "Tile")
             {
-                Debug.Log("Unable to move");
+                //Debug.Log("Unable to move");
             }
             else
             {
@@ -72,7 +72,7 @@ public class PlayerScript : MonoBehaviour
 
     IEnumerator Roll(Vector3 direction)
     {
-        Debug.Log("Able to move");
+        //Debug.Log("Able to move");
         isMoving = true;
         playerRB.isKinematic = true;
         float remainingAngle = 90;
