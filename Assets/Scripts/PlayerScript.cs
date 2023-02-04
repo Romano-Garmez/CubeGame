@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerScript : MonoBehaviour
+public class playerScript : MonoBehaviour
 {
     public int speed = 300;
     public LayerMask layerMask;
@@ -112,7 +112,7 @@ public class PlayerScript : MonoBehaviour
             Mathf.Round(transform.position.y),
             Mathf.Round(transform.position.z)
         );
-        //transform.eulerAngles = new Vector3(0, 0, 0);
+        transform.eulerAngles = new Vector3(0, 0, 0);
         isMoving = false;
     }
 }
