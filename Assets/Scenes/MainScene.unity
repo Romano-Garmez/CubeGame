@@ -2138,7 +2138,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -3008,6 +3008,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8365711419464986337, guid: b35f8d174afa661448cae83d07942095,
         type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8365711419464986337, guid: b35f8d174afa661448cae83d07942095,
+        type: 3}
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
@@ -3023,8 +3028,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8365711419464986338, guid: b35f8d174afa661448cae83d07942095,
         type: 3}
+      propertyPath: m_AngularDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8365711419464986338, guid: b35f8d174afa661448cae83d07942095,
+        type: 3}
       propertyPath: m_Constraints
-      value: 122
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 8365711419464986338, guid: b35f8d174afa661448cae83d07942095,
+        type: 3}
+      propertyPath: m_Interpolate
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8365711419464986338, guid: b35f8d174afa661448cae83d07942095,
         type: 3}

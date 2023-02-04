@@ -8,7 +8,7 @@ public class PlayerScript : MonoBehaviour
     public LayerMask layerMask;
     private Rigidbody playerRB;
     public bool isMoving = false;
-    public bool isTouchingStickyBlock = false;
+    public bool isTouchingStickyBlock;
     private RaycastHit hit;
 
     void Start()
@@ -55,6 +55,7 @@ public class PlayerScript : MonoBehaviour
 
     void checkRoll(Vector3 direction)
     {
+        Debug.DrawRay(transform.position, direction, Color.green);
         if (Physics.Raycast(transform.position, direction, out hit, 1, layerMask))
         {
             //stop motion if wall in the way
@@ -63,7 +64,10 @@ public class PlayerScript : MonoBehaviour
                 isTouchingStickyBlock = true;
                 StartCoroutine(Roll(direction, true));
             }
-            isTouchingStickyBlock = false;
+            else
+            {
+                isTouchingStickyBlock = false;
+            }
         }
         //if hit is null, just go
         else
@@ -108,7 +112,7 @@ public class PlayerScript : MonoBehaviour
             Mathf.Round(transform.position.y),
             Mathf.Round(transform.position.z)
         );
-        transform.eulerAngles = new Vector3(0, 0, 0);
+        //transform.eulerAngles = new Vector3(0, 0, 0);
         isMoving = false;
     }
 }
