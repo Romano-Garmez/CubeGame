@@ -5,10 +5,12 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {
     public int speed = 300;
-    private Rigidbody playerRB;
-    private Vector3 rayDirection;
-    private bool isMoving = false;
     public LayerMask layerMask;
+    private Rigidbody playerRB;
+    private bool isMoving = false;
+
+    //for debugging
+    private Vector3 rayDirection;
 
     void Start()
     {
@@ -18,7 +20,9 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawRay(transform.position, rayDirection, Color.green);
+        //debug for testing raycasts
+        //Debug.DrawRay(transform.position, rayDirection, Color.green);
+
         if (isMoving)
         {
             return;
@@ -44,10 +48,12 @@ public class PlayerScript : MonoBehaviour
     void checkRoll(Vector3 direction)
     {
         RaycastHit hit;
-        rayDirection = direction;
+        //for debugging
+        //rayDirection = direction;
 
         if (Physics.Raycast(transform.position, direction, out hit, 1, layerMask))
         {
+            //stop motion if wall in the way
             if (hit.collider.gameObject.tag == "Tile")
             {
                 Debug.Log("Unable to move");
@@ -57,6 +63,7 @@ public class PlayerScript : MonoBehaviour
                 StartCoroutine(Roll(direction));
             }
         }
+        //if hit is null, just go
         else
         {
             StartCoroutine(Roll(direction));
