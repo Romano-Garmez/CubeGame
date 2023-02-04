@@ -7,10 +7,9 @@ public class PlayerScript : MonoBehaviour
     public int speed = 300;
     public LayerMask layerMask;
     private Rigidbody playerRB;
-    private bool isMoving = false;
-
-    //for debugging
-    private Vector3 rayDirection;
+    public bool isMoving = false;
+    public bool isTouchingStickyBlock = false;
+    private RaycastHit hit;
 
     void Start()
     {
@@ -20,11 +19,20 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //debug for testing raycasts
-        //Debug.DrawRay(transform.position, rayDirection, Color.green);
-
-        if (isMoving)
+        if (!isMoving)
         {
+            playerRB.isKinematic = false;
+            playerRB.useGravity = true;
+            if (isTouchingStickyBlock)
+            {
+                playerRB.isKinematic = true;
+                playerRB.useGravity = false;
+            }
+        }
+        else
+        {
+            playerRB.isKinematic = true;
+            playerRB.useGravity = false;
             return;
         }
         if (Input.GetKey(KeyCode.RightArrow))
@@ -47,37 +55,38 @@ public class PlayerScript : MonoBehaviour
 
     void checkRoll(Vector3 direction)
     {
-        RaycastHit hit;
-        //for debugging
-        //rayDirection = direction;
-
         if (Physics.Raycast(transform.position, direction, out hit, 1, layerMask))
         {
             //stop motion if wall in the way
-            if (hit.collider.gameObject.tag == "Tile")
+            if (hit.collider.gameObject.tag == "StickyGround")
             {
-                //Debug.Log("Unable to move");
+                isTouchingStickyBlock = true;
+                StartCoroutine(Roll(direction, true));
             }
-            else
-            {
-                StartCoroutine(Roll(direction));
-            }
+            isTouchingStickyBlock = false;
         }
         //if hit is null, just go
         else
         {
-            StartCoroutine(Roll(direction));
+            isTouchingStickyBlock = false;
+            StartCoroutine(Roll(direction, false));
         }
     }
 
-    IEnumerator Roll(Vector3 direction)
+    IEnumerator Roll(Vector3 direction, bool Up)
     {
-        //Debug.Log("Able to move");
         isMoving = true;
-        playerRB.isKinematic = true;
+        Vector3 rotationCenter;
         float remainingAngle = 90;
-        Vector3 rotationCenter = transform.position + direction / 2 + Vector3.down / 2;
         Vector3 rotationAxis = Vector3.Cross(Vector3.up, direction);
+        if (Up)
+        {
+            rotationCenter = transform.position + direction / 2 + Vector3.up / 2;
+        }
+        else
+        {
+            rotationCenter = transform.position + direction / 2 + Vector3.down / 2;
+        }
 
         while (remainingAngle > 0)
         {
@@ -86,7 +95,20 @@ public class PlayerScript : MonoBehaviour
             remainingAngle -= rotationAngle;
             yield return null;
         }
-        playerRB.isKinematic = false;
+
+        //roll on top of sticky blocks at the top of stack
+        if (Up && !Physics.Raycast(transform.position, direction, out hit, 1, layerMask))
+        {
+            StartCoroutine(Roll(direction, false));
+        }
+
+        //fix for imperfect movement
+        transform.position = new Vector3(
+            Mathf.Round(transform.position.x),
+            Mathf.Round(transform.position.y),
+            Mathf.Round(transform.position.z)
+        );
+        transform.eulerAngles = new Vector3(0, 0, 0);
         isMoving = false;
     }
 }

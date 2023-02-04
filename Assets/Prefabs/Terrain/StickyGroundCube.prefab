@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 8112491524376924850}
   - component: {fileID: 8112491524376924851}
   m_Layer: 0
-  m_Name: TerrainCube
-  m_TagString: Tile
+  m_Name: StickyGroundCube
+  m_TagString: StickyGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f904fac889ccd8d42b60ac1c11dc5f91, type: 2}
+  - {fileID: 2100000, guid: f29b9efacb0fa1b45a6ebd5778585717, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
