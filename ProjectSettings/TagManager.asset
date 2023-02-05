@@ -6,6 +6,7 @@ TagManager:
   tags:
   - StickyGround
   - MovingPlatform
+  - DeathBlock
   layers:
   - Default
   - TransparentFX

@@ -9,10 +9,12 @@ public class playerScript : MonoBehaviour
     public bool isMoving = false;
     public bool isTouchingStickyBlock;
     private RaycastHit hit;
+    private Vector3 startingPos;
 
     void Start()
     {
         playerRB = GetComponent<Rigidbody>();
+        startingPos = transform.position;
     }
 
     //moving platforms
@@ -21,7 +23,12 @@ public class playerScript : MonoBehaviour
         if (other.tag == "MovingPlatform")
         {
             transform.parent = other.transform.parent;
-            Debug.Log("inside");
+            Debug.Log("On moving platform");
+        }
+        if (other.tag == "DeathBlock" && !isMoving)
+        {
+            Debug.Log("Death Block Touched");
+            transform.position = startingPos;
         }
     }
 
@@ -30,7 +37,7 @@ public class playerScript : MonoBehaviour
         if (other.tag == "MovingPlatform")
         {
             transform.parent = null;
-            Debug.Log("exit");
+            Debug.Log("Exitting moving platform");
         }
     }
 
