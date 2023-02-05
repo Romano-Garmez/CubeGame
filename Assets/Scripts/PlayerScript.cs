@@ -16,6 +16,23 @@ public class playerScript : MonoBehaviour
         playerRB = GetComponent<Rigidbody>();
     }
 
+    //moving platforms
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "MovingPlatform")
+        {
+            transform.parent = other.transform.parent;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "MovingPlatform")
+        {
+            transform.parent = null;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -27,22 +44,6 @@ public class playerScript : MonoBehaviour
             {
                 playerRB.isKinematic = true;
                 playerRB.useGravity = false;
-            }
-
-            //follow location of moving platform below
-            RaycastHit floorDetection;
-            if (Physics.Raycast(transform.position, Vector3.down, out floorDetection, 1, layerMask))
-            {
-                if (floorDetection.collider.gameObject.tag == "MovingPlatform")
-                {
-                    Transform floor = floorDetection.collider.gameObject.transform;
-
-                    transform.position = new Vector3(
-                        floor.position.x,
-                        transform.position.y,
-                        floor.position.z
-                    );
-                }
             }
         }
         else

@@ -131,7 +131,7 @@ MonoBehaviour:
   speed: 300
   layerMask:
     serializedVersion: 2
-    m_Bits: 2147483647
+    m_Bits: 51
   isMoving: 0
   isTouchingStickyBlock: 0
 --- !u!1 &8843260191846409597
