@@ -21,6 +21,7 @@ public class playerScript : MonoBehaviour
         if (other.tag == "MovingPlatform")
         {
             transform.parent = other.transform.parent;
+            Debug.Log("inside");
         }
     }
 
@@ -29,6 +30,7 @@ public class playerScript : MonoBehaviour
         if (other.tag == "MovingPlatform")
         {
             transform.parent = null;
+            Debug.Log("exit");
         }
     }
 
