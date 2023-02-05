@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - StickyGround
+  - MovingPlatform
   layers:
   - Default
   - TransparentFX

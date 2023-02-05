@@ -28,6 +28,22 @@ public class playerScript : MonoBehaviour
                 playerRB.isKinematic = true;
                 playerRB.useGravity = false;
             }
+
+            //follow location of moving platform below
+            RaycastHit floorDetection;
+            if (Physics.Raycast(transform.position, Vector3.down, out floorDetection, 1, layerMask))
+            {
+                if (floorDetection.collider.gameObject.tag == "MovingPlatform")
+                {
+                    Transform floor = floorDetection.collider.gameObject.transform;
+
+                    transform.position = new Vector3(
+                        floor.position.x,
+                        transform.position.y,
+                        floor.position.z
+                    );
+                }
+            }
         }
         else
         {
@@ -55,7 +71,7 @@ public class playerScript : MonoBehaviour
 
     void checkRoll(Vector3 direction)
     {
-        Debug.DrawRay(transform.position, direction, Color.green);
+        //Debug.DrawRay(transform.position, direction, Color.green);
         if (Physics.Raycast(transform.position, direction, out hit, 1, layerMask))
         {
             //stop motion if wall in the way
